@@ -8,6 +8,7 @@
 const url = 'https://www.espncricinfo.com/series/ipl-2020-21-1210595'
 const request = require('request')
 const cheerio = require('cheerio')
+const getAllmatch = require('./allMatch')
 //GETTING THE HTML CODE
 request(url,cb)
 function cb(error,response,html){
@@ -25,28 +26,8 @@ function extractLink(html){
     let link = anchorElem.attr('href') //GETTING THE VALUE OF HREF(IT CONTAINS THE VALUE OF SITE LINK)
     let fulllink = 'https://www.espncricinfo.com/' + link // HALF LINK IS STORED, BROWSER COMPLETES IT, SO WE NEED TO ADD OURSELF IN THE LINK
     //FULL LINK IS EXTRACTED
-    getAllMatchLink(fulllink) //getting the html of full link
+    getAllmatch.getAllMatch (fulllink) //getting the html of full link
 }
 
-function getAllMatchLink(html){
-    request(html,function(error,response,html){ //GETTING HTML OF NEW LINK (MAIN URL --->VIEW RESULTS(THIS LINK HTML IS EXTRACTED))
-        if(error){
-            console.error(error)
-        }
-        else{
-            extractAllLink(html) // getting all the score card from full link
-        }
-    })
-}
-function extractAllLink(html){
-    let $ = cheerio.load(html)
-    let scorecard = $('a[data-hover="Scorecard"]') // every scorecard is now stored in a from of array in scorecard
-    for(let i=0;i<scorecard.length;i++){
-        let link = $(scorecard[i]).attr('href') // each and every scorecard is getting accessed
-        let fulllink = "https://www.espncricinfo.com/" + link
-        console.log(fulllink)
-    }
-    //ALL LINKS OF MATCH SCORECARD ARE ACCESSED
-    
-}
+
 //TILL NOW MAIN LIN-->VIEW RESULTS-->NEW HTML EXTRACTED --->EACH SCORECARD ACCESSED

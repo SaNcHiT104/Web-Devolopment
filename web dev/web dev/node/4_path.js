@@ -1,0 +1,7 @@
+const path = require('path')
+let extensioname = path.extname('C:\\Users\\jains\\OneDrive\\Desktop\\vs code\\web dev\\node\\new folder\\f1.txt')
+console.log("extension anme -->"+extensioname)
+let basename = path.basename('C:\\Users\\jains\\OneDrive\\Desktop\\vs code\\web dev\\node\\new folder\\f1.txt')
+console.log('basename -->'+basename)
+console.log(__dirname)
+console.log(__filename)
