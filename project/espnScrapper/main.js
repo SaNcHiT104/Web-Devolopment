@@ -9,6 +9,11 @@ const url = 'https://www.espncricinfo.com/series/ipl-2020-21-1210595'
 const request = require('request')
 const cheerio = require('cheerio')
 const getAllmatch = require('./allMatch')
+const fs = require('fs')
+const path = require('path')
+let iplPath = path.join(__dirname,"IPL") //joining the path of espn scrapper with ipl folder //dirname-gets the current directory
+dirCreator(iplPath) // creating the folder
+
 //GETTING THE HTML CODE
 request(url,cb)
 function cb(error,response,html){
@@ -31,3 +36,8 @@ function extractLink(html){
 
 
 //TILL NOW MAIN LIN-->VIEW RESULTS-->NEW HTML EXTRACTED --->EACH SCORECARD ACCESSED
+function dirCreator(filepath){
+    if(fs.existsSync(filepath)==false){ // checking if the file exist or not
+        fs.mkdirSync(filepath)
+    }
+}

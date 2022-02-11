@@ -1,0 +1,72 @@
+[
+    {
+        "name": "Sanchit",
+        "age": 18,
+        "topper": false,
+        "address": {
+            "State": "delhi",
+            "Country": "India"
+        },
+        "friends": [
+            "samar",
+            "dhruv",
+            "tani"
+        ]
+    },
+    {
+        "name": "Dhruv",
+        "age": 18,
+        "topper": false,
+        "address": {
+            "State": "delhi",
+            "Country": "India"
+        },
+        "friends": [
+            "samar",
+            "sanchit",
+            "tani"
+        ]
+    },
+    {
+        "name": "samar",
+        "age": 18,
+        "topper": true,
+        "address": {
+            "State": "delhi",
+            "Country": "India"
+        },
+        "friends": [
+            "sanchit",
+            "dhruv",
+            "tani"
+        ]
+    },
+    {
+        "name": "tani",
+        "age": 18,
+        "topper": false,
+        "address": {
+            "State": "delhi",
+            "Country": "India"
+        },
+        "friends": [
+            "samar",
+            "dhruv",
+            "samarjeet"
+        ]
+    },
+    {
+        "name": "tanmay",
+        "age": 18,
+        "topper": false,
+        "address": {
+            "State": "delhi",
+            "Country": "India"
+        },
+        "friends": [
+            "samar",
+            "dhruv",
+            "tani"
+        ]
+    }
+]

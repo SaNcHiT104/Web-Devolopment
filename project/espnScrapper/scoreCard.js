@@ -1,6 +1,9 @@
 // scrapping from the given match starts
 const request = require('request')
 const cheerio = require('cheerio')
+const path = require('path')
+const fs = require('fs')
+const xlsx=require('xlsx')
 //const url = 'https://www.espncricinfo.com//series/ipl-2020-21-1210595/mumbai-indians-vs-chennai-super-kings-1st-match-1216492/full-scorecard'
 function processScorecard(html){
     request(html,cb)
@@ -63,14 +66,55 @@ function extractMatchdetail(html){
                 let fours = $(allCols[4]).text().trim()
                 let sixes = $(allCols[5]).text().trim()
                 let STR = $(allCols[7]).text().trim()
-                console.log(`${playerName} | ${run} | ${balls} | ${fours} |${sixes} | ${STR}`)
-
+                // console.log(`${playerName} | ${run} | ${balls} | ${fours} |${sixes} | ${STR}`)
+                process(teamname,opponentName,playerName,run,fours,sixes,STR,location,date,result)
+                //process function will now takeover the data to take it to excel
             }
         }
         console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
 
     }
     
+}
+function process(teamname,opponentName,playerName,run,fours,sixes,STR,location,date,result){
+    let teampath = path.join(__dirname,"IPl",teamname) //for teamnames
+    dirCreator(teampath) //creating folders for each team
+    let playerpath = path.join(teampath,playerName+".xlsx") //creating excel file for each player
+    let content =excelReader(playerpath,playerName) //getting empty array
+    let playerObj = { //making JSON file
+        teamname,
+        opponentName,
+        playerName,
+        run,
+        fours,
+        sixes,
+        STR,
+        location,
+        date,
+        result
+    }
+    content.push(playerObj) // puting data in JSON
+    excelWriter(playerpath,playerName,content) //Making the excel file
+}
+function dirCreator(filepath){
+    if(fs.existsSync(filepath)==false){ // checking if the file exist or not
+        fs.mkdirSync(filepath)
+    }
+}
+function excelWriter(fileName,sheetName,json){
+    let newWB = xlsx.utils.book_new(); //Creating a new Workbook
+    let newWS = xlsx.utils.json_to_sheet(json); //Creating a new work Sheet JSON--->SHEET(converting Rows and col)
+    xlsx.utils.book_append_sheet(newWB, newWS, sheetName); 
+    xlsx.writeFile(newWB, fileName);
+}
+function excelReader(filePath,sheetName){
+    if(fs.existsSync(filePath)==false){
+        return [];
+    }
+    let wb = xlsx.readFile(filePath);
+    let excelData = wb.Sheets[sheetName];
+    let ans = xlsx.utils.sheet_to_json(excelData);
+    return ans
 }
 module.exports ={
     ps :processScorecard
