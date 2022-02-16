@@ -21,12 +21,6 @@ let obj2 ={
     }
 }
 obj2.f()
-
-
-
-
-
-
 // summary
 // context:node+strict
 // global area->empty object
